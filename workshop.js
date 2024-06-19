@@ -85,13 +85,14 @@ samples({
   hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
              'hjdsynth/bell-anomal.wav', 'hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
   gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
-       'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav']
+       'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
+       'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav']
 }, 'github:lwlsn/digital-selves-samples/main/');
 
 // using randomness 
 sound("gel*8")
-  .n(rand.range(0,5))
-  .sus(0.5).rel(0.5)
+  .n(rand.range(0,8))
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5))
 
 // samples({
 //     k: [
@@ -116,16 +117,16 @@ sound("gel*8")
 
 /* 1.3 - Creating a complex drum beat  ⏰ 5 mins */ 
 
-s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
-  .rarely(chunk(4, fast(2)))
-  .jux(rev)
-  .off(.25, mul(speed(.8)))
-  .superimpose(
-    x=>x.vowel("<a <e i>>/4").room(2).slow(2).late(.25).color("#00ff0050")
-  )
-  .lastOf(8, mul(speed(-2)))
-   .color("[#70D6FF #e63946 #f1faee #457b9d #1d3557]/12")
-  .punchcard({fold:1,flipTime:1, vertical:1})
+// s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
+//   .rarely(chunk(4, fast(2)))
+//   .jux(rev)
+//   .off(.25, mul(speed(.8)))
+//   .superimpose(
+//     x=>x.vowel("<a <e i>>/4").room(2).slow(2).late(.25)
+//   )
+//   .lastOf(8, mul(speed(-2)))
+//    .color("[#70D6FF #e63946 #f1faee #457b9d #1d3557]/12")
+//   .punchcard({fold:1,flipTime:1, vertical:1})
   
 
 
@@ -145,7 +146,7 @@ s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
 //     .room(saw.rangex(0.1,1).slow(8))
 //     .delay("0.1:0.6:0.7"),
 //     sound("{k:3*2 k:3 ~ k:1 ~ k:3 ~  k:3}%4"),
-//     sound("~ ~ ~ cp")
+//     sound("~ ~ ~ <cp cp*4>")
 //   )
 
 
@@ -156,13 +157,29 @@ s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
 
 /* 2.1 - Writing melodies */
 
-// 2.1.1 -- Repetition (and it's exploitation)
+// 2.1.1 -- Repetition (and it's exploitation) ⏰ 5 mins
 
-// 2.1.2 -- Interference 
 
-// 2.1.3 -- Call and response 
+// 2.1.2 -- Interference  ⏰ 5 mins
 
-// 2.2 -- Creating compositions
+
+// note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!9 d3 ~!2 }%8")
+//   .s(choose("sawtooth", "square")).punchcard()
+
+
+// note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8")
+// .s(choose("sawtooth", "square")).punchcard()
+
+
+stack(
+  note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8").color("[#70D6FF]" ),
+  note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8".color("[#1d3557]"))
+)
+.s(choose("sawtooth", "square")).punchcard()
+
+// 2.1.3 -- Call and response ⏰ 5 mins
+
+// 2.2 -- Creating compositions ⏰ 15 mins
 
 
 
