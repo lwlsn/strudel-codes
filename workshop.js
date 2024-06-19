@@ -1,6 +1,6 @@
 /*  PART 1 - SOME COMPOSITION FUNDAMENTALS */
 
-/* 1.1 - Review from previous workshop.. ⏰ 5 mins */ 
+/* 1.1 - Review strudel basics.. ⏰ 5 mins */ 
 
 //update the tempo
 let setbpm = t => setcps(t/4/60)
@@ -77,17 +77,21 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 /* 1.2 - Playing sounds from the digital selves sample pack ⏰ 5 mins */ 
 
 // How do i download it? 
-
-//
+// https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 
 // How do i load it into strudel? 
 samples({
   k:  ['snd/k/DNC_Kick.wav' ], 
-  hjdsynth: ['snd/hjdsynth/bass-armor.wav','snd/hjdsynth/bell-dingo.wav','hjdsynth/bell-anomal.wav'],
-  gel: ['snd/glass_gel_1.wav', 'snd/glass_gel_2.wav, snd/glass_gel_3.wav', 'snd/glass_gel_4.wav', 'snd/glass_gel_5.wav']
+  hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
+             'hjdsynth/bell-anomal.wav', 'hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
+  gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
+       'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav']
 }, 'github:lwlsn/digital-selves-samples/main/');
 
-sound("k")
+// using randomness 
+sound("gel*8")
+  .n(rand.range(0,5))
+  .sus(0.5).rel(0.5)
 
 // samples({
 //     k: [
@@ -110,19 +114,19 @@ sound("k")
 
 
 
-/* 1.3 - Example drum beat  ⏰ 10 mins */ 
+/* 1.3 - Creating a complex drum beat  ⏰ 5 mins */ 
+
 s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
-  .chunk(4, fast(2))
+  .rarely(chunk(4, fast(2)))
   .jux(rev)
   .off(.25, mul(speed(.8)))
   .superimpose(
     x=>x.vowel("<a <e i>>/4").room(2).slow(2).late(.25).color("#00ff0050")
   )
   .lastOf(8, mul(speed(-2)))
-  .color("[#0000ff50 #ffff0020]*3")
-  .punchcard()
 
-/* 1.4 -  Playing with harmony (strudel-based synthesisers) ⏰ 10 mins  */
+
+/* 1.4  Playing with strudel-based synthesisers ⏰ 5 mins  */
   
 // stack(
 //   n("[0 1 3 [~ 4] 5 6 [~ 7] 8]")
@@ -145,16 +149,19 @@ s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
 
 
 
-/* 1.5 - Playing with midi (samples)?  */
-
-
 /*  PART 2 - GOING DEEPER */
 
-// 2.1 -- Repetition (and it's exploitation)
+/* 2.1 - Writing melodies */
 
-// 2.2 -- Interference 
+// 2.1.1 -- Repetition (and it's exploitation)
 
-// 2.3 -- Call and response 
+// 2.1.2 -- Interference 
 
-// 2.4 -- Putting this together into a composition
+// 2.1.3 -- Call and response 
+
+// 2.2 -- Creating compositions
+
+
+
+
 
