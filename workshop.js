@@ -124,6 +124,9 @@ s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
     x=>x.vowel("<a <e i>>/4").room(2).slow(2).late(.25).color("#00ff0050")
   )
   .lastOf(8, mul(speed(-2)))
+   .color("[#70D6FF #e63946 #f1faee #457b9d #1d3557]/12")
+  .punchcard({fold:1,flipTime:1, vertical:1})
+  
 
 
 /* 1.4  Playing with strudel-based synthesisers ⏰ 5 mins  */
