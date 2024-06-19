@@ -83,10 +83,11 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 samples({
   k:  ['snd/k/DNC_Kick.wav' ], 
   hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
-             'hjdsynth/bell-anomal.wav', 'hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
+             'snd/hjdsynth/bell-anomal.wav', 'snd/hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
   gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
        'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
-       'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav']
+       'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
+  csubs: ['snd/csubs/sub_with_kick_12_C.wav']
 }, 'github:lwlsn/digital-selves-samples/main/');
 
 // using randomness 
@@ -115,7 +116,7 @@ sound("gel*8")
 
 
 
-/* 1.3 - Creating a complex drum beat  ⏰ 5 mins */ 
+/* 1.3 - Creating a complex drum beat through function chaining  ⏰ 5 mins */ 
 
 // s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
 //   .rarely(chunk(4, fast(2)))
@@ -130,7 +131,12 @@ sound("gel*8")
   
 
 
-/* 1.4  Playing with strudel-based synthesisers ⏰ 5 mins  */
+
+/* 1.4  Melodies and arpeggios ⏰ 5 mins  */  
+
+
+  
+/* 1.5  Playing with strudel-based synthesisers ⏰ 5 mins  */
   
 // stack(
 //   n("[0 1 3 [~ 4] 5 6 [~ 7] 8]")
@@ -157,8 +163,15 @@ sound("gel*8")
 
 /* 2.1 - Writing melodies */
 
-// 2.1.1 -- Repetition (and it's exploitation) ⏰ 5 mins
+// 2.1.1 -- Repetition and expectation ⏰ 5 mins
 
+// note("c3 c4 g3 ds4").sound("hjdsynth:5")
+
+// note("c3 c4 g3 ds4").sound("hjdsynth:5").every(4,fast(2))
+
+// note("c3 c4 g3 ds4".off(1/16, x=>x.add(12)).off(1/8, x=>x.add(7)))
+//   .sound("hjdsynth:8")
+// .every(4,fast(2))
 
 // 2.1.2 -- Interference  ⏰ 5 mins
 
@@ -171,16 +184,49 @@ sound("gel*8")
 // .s(choose("sawtooth", "square")).punchcard()
 
 
-stack(
-  note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8").color("[#70D6FF]" ),
-  note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8".color("[#1d3557]"))
+// stack(
+//   note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+//   note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
+// )
+// .s("hjdsynth:5").theme("tokyoNight").punchcard()
+
+// // 2.1.3 -- Call and response ⏰ 5 mins
+// stack(
+//   note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+//   note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
+// )
+// .s("hjdsynth:0").theme("tokyoNight").punchcard()
+
+// 2.2 -- Creating compositions ⏰ 20 mins
+
+let intro = stack(
+  sound("gel*8?")
+  .n(rand.range(0,8))
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.25),
+  stack(
+    note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+    note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
+  ).sound("hjdsynth:0")
 )
-.s(choose("sawtooth", "square")).punchcard()
 
-// 2.1.3 -- Call and response ⏰ 5 mins
 
-// 2.2 -- Creating compositions ⏰ 15 mins
+let shift = stack(
+  note("{~ [~ e2] [gs3 [~ cs4]] [a2 cs3]}%4").sound("hjdsynth:3")
+)
+  
+arrange(
+  [7, intro],
+  [1, shift]
+)
 
+
+// arrange(
+//   [16, build],
+//   [2, predrop],
+//   [16, drop],
+//   [16, verse],
+//   [4, postverse]
+// ).fontFamily("x3270")
 
 
 
