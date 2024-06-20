@@ -2,10 +2,18 @@
 
 /* 1.1 - Review strudel basics.. ⏰ 5 mins */ 
 
+
+// Comments and evaluations..
+
+
 //update the tempo
+const loopAx = register('loopAx', 
+  (l, pat) => pat.loopAt(l).chop(l*8).legato(1).mul(speed(0.99))
+);
+
 let setbpm = t => setcps(t/4/60)
 
-setbpm(151)
+setbpm(157)
 
 // make a simple pattern
 // sound("bd AlesisSR16_sd*4") // mini-notation basics, find a sample, repeat events 
@@ -17,7 +25,6 @@ setbpm(151)
 // Euclidean rhythms 
 
 // sound("casio:1(3,8)")
-
 
 /*
 E(2,5)=[x . x . .] is a thirteenth century Persian rhythm called Khafif-e-ramal [34]. It is also the metric
@@ -74,9 +81,12 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 // )
 // .punchcard()
 
-/* 1.2 - Playing sounds from the digital selves sample pack ⏰ 5 mins */ 
+/* 1.2 - Playing sounds from the digital selves sample pack ⏰ 10 mins */ 
 
 // How do i download it? 
+
+// https://github.com/lwlsn/digital-selves-samples/tree/main
+
 // https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 
 // How do i load it into strudel? 
@@ -87,13 +97,19 @@ samples({
   gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
        'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
        'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
-  csubs: ['snd/csubs/sub_with_kick_12_C.wav']
+  csubs: ['snd/csubs/sub_with_kick_12_C.wav'],
+  hack: ['snd/hackspace/opening-bar.wav'],
+  hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
+  hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
+  hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
 }, 'github:lwlsn/digital-selves-samples/main/');
 
-// using randomness 
-sound("gel*8")
-  .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5))
+
+// Using randomness to select different samples:
+
+// sound("gel*8")
+//   .n(rand.range(0,8))
+//   .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5))
 
 // samples({
 //     k: [
@@ -108,11 +124,12 @@ sound("gel*8")
 //   }, 'github:lwlsn/lwlsn.github.io/master/');
 
 
+
+// Visualising outputs with the punchcard:
 // stack(sound("{k:3*2 k:3 ~ k:1 ~ k:3 ~  k:3}%4").color("[#5BC0EB*4 #FDE74C ]")
 //     //sound("~ ~ ~ cp").color("[#C3423F]")
 //       )
 // .punchcard()
-
 
 
 
@@ -129,6 +146,8 @@ sound("gel*8")
 //    .color("[#70D6FF #e63946 #f1faee #457b9d #1d3557]/12")
 //   .punchcard({fold:1,flipTime:1, vertical:1})
   
+
+// Using the stack notation: 
 
 
 
@@ -165,68 +184,196 @@ sound("gel*8")
 
 // 2.1.1 -- Repetition and expectation ⏰ 5 mins
 
-// note("c3 c4 g3 ds4").sound("hjdsynth:5")
+// David Huron suggests in music theory in his book "Sweet Anticipation," 
+// pleasure in music arises when the listener's expectations are violated in a way 
+//that is both surprising and yet musically coherent, 
+//creating a sense of novelty and engagement.
 
-// note("c3 c4 g3 ds4").sound("hjdsynth:5").every(4,fast(2))
+// Let's explore that:
 
-// note("c3 c4 g3 ds4".off(1/16, x=>x.add(12)).off(1/8, x=>x.add(7)))
-//   .sound("hjdsynth:8")
-// .every(4,fast(2))
+// note("c2 c3 [~ g2] ds3")
+//   .sound("hkeys:0")
+
+// // Change the pattern every n-cycles
+// note("c2 c3 [~ g2] ds3")
+//   .sound("hkeys:0")
+
+// // Add unexpected elements
+// note("<c2 g3(3,8)> <c3*3 c3> [~ g2] ds3")
+//   .sound("hkeys:0")
+
+// // Using randomness again
+// note("<c2 g3(3,8)> <<c3 c3*2> c3> [~ g2] ds3")
+//   .rarely(fast(2))
+//   .sound("hkeys:0")
 
 // 2.1.2 -- Interference  ⏰ 5 mins
 
+// Interference patterns in melodies occur when overlapping musical lines create 
+//complex harmonic and rhythmic interactions, leading to a rich and textured sound
 
-// note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!9 d3 ~!2 }%8")
-//   .s(choose("sawtooth", "square")).punchcard()
+// Let's explore that:
+
+// Using off to offset the pattern
+// note("c2 c3 [~ g2] ds3".off(1/16, x=>x.add(12)).off(1/8, x=>x.add(7)))
+//   .sound("hkeys:0")
+// .every(4,fast(2))
+
+// OR layering melodies with stack: 
+
+// note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!9 d2 ~!2 }%8")
+//   .s("hkeys:0")
+//   .punchcard()
 
 
-// note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8")
-// .s(choose("sawtooth", "square")).punchcard()
+// note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8")
+// .s(choose("hkeys:0"))
+//   .delay("0.125:0.25:0.3")
+//   .punchcard()
 
 
 // stack(
-//   note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
-//   note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
+//   note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+//   note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
 // )
-// .s("hjdsynth:5").theme("tokyoNight").punchcard()
+// .s("hkeys:0")
+//   .delay("0.125:0.25:0.3")
+//  .punchcard()
+
 
 // // 2.1.3 -- Call and response ⏰ 5 mins
-// stack(
-//   note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
-//   note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
-// )
-// .s("hjdsynth:0").theme("tokyoNight").punchcard()
 
-// 2.2 -- Creating compositions ⏰ 20 mins
+
+stack(
+  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+)
+.s("hkeys:0").punchcard()
+
+// Response 1 
+note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4").s("hkeys:2")
+
+// Response 2
+note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
+  .sound("hkeys:3")
+
+// Add these altogether.. 
+stack(
+ stack(
+  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+  )
+ .s("hkeys:0"),
+  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
+  .color("[#f1faee]")
+  .s("hkeys:2"), 
+     note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
+       .color("[#d62828]")
+       .sound("hkeys:3").gain(0.25)
+)
+.punchcard()
+
+
+//  2.2 Add a bassline and some drums  :)
+
+// note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
+//   .sound("hbass:1")
+
+
+
+
+// 2.3 -- Creating compositions ⏰ 20 mins
+
+ // do this at the end..? 
+let preintro = stack(
+  s("hack").loopAx(4)
+)
 
 let intro = stack(
   sound("gel*8?")
   .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.25),
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
   stack(
-    note("{fs3 ~!2 e3 ~!2 d3 ~!9 a2 ~!6 d3  ~!5 d3 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
-    note("{a4 ~!3 gs4 a4 e5 ~ ~!8 cs5 ~!3 d5 cs5 a4 ~ ~!8 }%8").color("[#1d3557]")
-  ).sound("hjdsynth:0")
+  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+  )
+  .sound("hkeys:0")
+  .delay("0.125:0.25:0.3"), 
+  sound("hbreaks:0")
+  .loopAx(4)
+  .lpf(rand.range(100, 1000))
+  .lpq(rand)
 )
 
 
 let shift = stack(
-  note("{~ [~ e2] [gs3 [~ cs4]] [a2 cs3]}%4").sound("hjdsynth:3")
+  sound("gel*8?")
+  .n(rand.range(0,8))
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+  note("{~ [~ e1] [gs2 [~ cs3]] [a1 cs2]}%4").sound("hkeys:1")
+)
+
+let pattern2 = stack(
+  stack(
+ stack(
+  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+  )
+ .s("hkeys:0"),
+  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
+  .color("[#f1faee]")
+  .s("hkeys:2"),
+  sound("hbreaks:0")
+  .loopAx(4)
+  .lpf(rand.range(100, 1000))
+  .lpq(rand),
+    sound("gel*8?")
+  .n(rand.range(0,8))
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+  note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
+  .sound("hbass:1")
+)
+)
+
+
+let drop = stack(
+stack(
+ stack(
+  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+  )
+ .s("hkeys:0"),
+  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
+  .color("[#f1faee]")
+  .s("hkeys:2"),
+  sound("hbreaks:0")
+  .loopAx(4)
+  .lpf(rand.range(100, 1000))
+  .lpq(rand),
+    sound("gel*8?")
+  .n(rand.range(0,8))
+  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+  note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
+  .sound("hbass:1"),
+  sound("hbreaks:1")
+   .loopAx(8).gain(0.5),
+  note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
+    .color("[#d62828]")
+    .sound("hkeys:3").gain(0.5)
+)
 )
   
 arrange(
+  [8, preintro],
   [7, intro],
-  [1, shift]
+  [1, shift], 
+  [7, pattern2],
+  [1, shift], 
+  [8, drop]
 )
+  .theme('tokyoNight')
+  .punchcard()
 
-
-// arrange(
-//   [16, build],
-//   [2, predrop],
-//   [16, drop],
-//   [16, verse],
-//   [4, postverse]
-// ).fontFamily("x3270")
 
 
 
