@@ -5,7 +5,6 @@
 
 // Comments and evaluations..
 
-
 //update the tempo
 const loopAx = register('loopAx', 
   (l, pat) => pat.loopAt(l).chop(l*8).legato(1).mul(speed(0.99))
@@ -81,7 +80,7 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 // )
 // .punchcard()
 
-/* 1.2 - Playing sounds from the digital selves sample pack ⏰ 10 mins */ 
+/* 1.2 - Playing sounds from the digital selves sample pack ⏰ 5-10 mins */ 
 
 // How do i download it? 
 
@@ -101,7 +100,10 @@ samples({
   hack: ['snd/hackspace/opening-bar.wav'],
   hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
   hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
-  hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
+  hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav'], 
+  amencutup: ['snd/amencutup/000_AMENCUT_001.wav','snd/amencutup/001_AMENCUT_002.wav', 'snd/amencutup/002_AMENCUT_003.wav',
+             'snd/amencutup/003_AMENCUT_004.wav', 'snd/amencutup/004_AMENCUT_005.wav', 'snd/amencutup/005_AMENCUT_006.wav'], 
+  ifdrums: ['snd/ifdrums/ignorebd.wav', 'snd/ifdrums/ignorehh.wav', 'snd/ifdrums/ignoresd.wav']
 }, 'github:lwlsn/digital-selves-samples/main/');
 
 
@@ -149,11 +151,34 @@ samples({
 
 // Using the stack notation: 
 
-
+// stack(
+//   sound("[ifdrums](5,8)").shape(0.6).gain(0.5).speed(iter(3, "0.5 1 0.75")),
+//   sound(" ~ [k(3,8)] ~ k*2"),
+//    n("<0 1 4>".add("<1 3 5 2>")).sound("[amencutup amencutup amencutup amencutup]/8")
+//   .struct("x(<3 5>,8,<0 2 1>)@2").speed("[1 2]/2") ,
+//     sound("RolandTR808_hh(7,8)?").speed(0.7).gain(0.875)
+// ).every(8, x=>x.hpf("200 400 800 1200"))
+//   .every(5, x=>x.crush(5))
 
 /* 1.4  Melodies and arpeggios ⏰ 5 mins  */  
 
+// You can play with more traditional notation: 
+// note("c3 as3 g3 c4")
+//   .sound("hjdsynth:0")
 
+// Or work with 'degrees of the scale', if you are not familiar with notation: 
+// n("0 2 4 7 2 4 <7 9> <9 13> ")
+//   .scale("A3:minor")
+//   .sound("hjdsynth:0")
+
+//You could also use randomness here 
+  // sound("hjdsynth:3(9,12)")
+  //   .note(rand.range(0,7).scale("A:minor"))
+
+  // Make patterns more like a traditional DAW
+// note("{c2 c3 [~ g2] ds3}%8")
+//   .sound("hjdsynth:4").color("[#70D6FF]" )
+//   .punchcard()
   
 /* 1.5  Playing with strudel-based synthesisers ⏰ 5 mins  */
   
@@ -244,34 +269,20 @@ samples({
 // // 2.1.3 -- Call and response ⏰ 5 mins
 
 
-stack(
-  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
-  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
-)
-.s("hkeys:0").punchcard()
+// stack(
+//   note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+//   note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+// )
+// .s("hkeys:0").punchcard()
 
 // Response 1 
-note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4").s("hkeys:2")
+// note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4").s("hkeys:2")
 
 // Response 2
-note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
-  .sound("hkeys:3")
+// note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
+//   .sound("hkeys:3")
 
-// Add these altogether.. 
-stack(
- stack(
-  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
-  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
-  )
- .s("hkeys:0"),
-  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
-  .color("[#f1faee]")
-  .s("hkeys:2"), 
-     note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
-       .color("[#d62828]")
-       .sound("hkeys:3").gain(0.25)
-)
-.punchcard()
+// Add these altogether.. with different colours to visualis
 
 
 //  2.2 Add a bassline and some drums  :)
@@ -279,100 +290,118 @@ stack(
 // note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
 //   .sound("hbass:1")
 
+// sound("hbreaks:0")
+//   .loopAx(4)
 
+// sound("hbreaks:1")
+//   .loopAx(8)
 
 
 // 2.3 -- Creating compositions ⏰ 20 mins
 
- // do this at the end..? 
-let preintro = stack(
-  s("hack").loopAx(4)
-)
-
-let intro = stack(
-  sound("gel*8?")
-  .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
-  stack(
-  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
-  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
-  )
-  .sound("hkeys:0")
-  .delay("0.125:0.25:0.3"), 
-  sound("hbreaks:0")
-  .loopAx(4)
-  .lpf(rand.range(100, 1000))
-  .lpq(rand)
-)
+// Intro - main melody /sfx / lowpass breaks
+// Shift - sfx/ a shorter melody. 
+// C+R1 -  main melody/ response 1 / sfx / bass / lowpass breaks
+//  C+R1 -  main melody/ response 1 / sfx / bass / lowpass breaks / highpass breaks
 
 
-let shift = stack(
-  sound("gel*8?")
-  .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
-  note("{~ [~ e1] [gs2 [~ cs3]] [a1 cs2]}%4").sound("hkeys:1")
-)
+//  // explain this at the end..? 
+// let preintro = stack(
+//   s("hack").loopAx(4)
+// )
 
-let pattern2 = stack(
-  stack(
- stack(
-  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
-  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
-  )
- .s("hkeys:0"),
-  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
-  .color("[#f1faee]")
-  .s("hkeys:2"),
-  sound("hbreaks:0")
-  .loopAx(4)
-  .lpf(rand.range(100, 1000))
-  .lpq(rand),
-    sound("gel*8?")
-  .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
-  note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
-  .sound("hbass:1")
-)
-)
+// let intro = stack(
+//   sound("gel*8?")
+//   .n(rand.range(0,8))
+//   .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+//   stack(
+//   note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".off(1/8, x=>x.add(12)).color("[#70D6FF]" )),
+//   note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+//   )
+//   .sound("hkeys:0")
+//   .delay("0.125:0.25:0.3"), 
+//   sound("hbreaks:0")
+//   .loopAx(4)
+//   .lpf(rand.range(100, 1000))
+//   .lpq(rand)
+// )
 
 
-let drop = stack(
-stack(
- stack(
-  note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
-  note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
-  )
- .s("hkeys:0"),
-  note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
-  .color("[#f1faee]")
-  .s("hkeys:2"),
-  sound("hbreaks:0")
-  .loopAx(4)
-  .lpf(rand.range(100, 1000))
-  .lpq(rand),
-    sound("gel*8?")
-  .n(rand.range(0,8))
-  .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
-  note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
-  .sound("hbass:1"),
-  sound("hbreaks:1")
-   .loopAx(8).gain(0.5),
-  note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
-    .color("[#d62828]")
-    .sound("hkeys:3").gain(0.5)
-)
-)
+// let shift = stack(
+//   sound("gel*8?")
+//   .n(rand.range(0,8))
+//   .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+//   note("{~ [~ e1] [gs2 [~ cs3]] [a1 cs2]}%4").sound("hkeys:1")
+// )
+
+// let pattern2 = stack(
+//   stack(
+//  stack(
+//   note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+//   note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+//   )
+//  .s("hkeys:0"),
+//   note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
+//   .color("[#f1faee]")
+//   .s("hkeys:2"),
+//   sound("hbreaks:0")
+//   .loopAx(4)
+//   .lpf(rand.range(100, 1000))
+//   .lpq(rand),
+//     sound("gel*8?")
+//   .n(rand.range(0,8))
+//   .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+//   note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
+//   .sound("hbass:1")
+// )
+// )
+
+
+// let drop = stack(
+// stack(
+//  stack(
+//   note("{fs2 ~!2 e2 ~!2 d2 ~!9 a1 ~!6 d2  ~!5 d2 ~!2 }%8".sometimes(off(1/8, x=>x.add(12))).color("[#70D6FF]" )),
+//   note("{a3 ~!3 gs3 a3 e4 ~ ~!8 cs4 ~!3 d4 cs4 a3 ~ ~!8 }%8").color("[#1d3557]")
+//   )
+//  .s("hkeys:0"),
+//   note("{[e3 ~] ~ ~ ~ ~ ~ [~ d3] [cs3 cs2] ~ ~ ~ ~ ~ ~ ~ [a3 gs3] [fs2 ~] ~ ~ ~  ~ ~ [~ a2] [e3 fs3] [d2 ~] ~ ~ ~ ~ ~ ~ ~}%4")
+//   .color("[#f1faee]")
+//   .s("hkeys:2"),
+//   sound("hbreaks:0")
+//   .loopAx(4)
+//   .lpf(rand.range(100, 1000))
+//   .lpq(rand),
+//     sound("gel*8?")
+//   .n(rand.range(0,8))
+//   .sus(rand.range(0.1, 0.5)).rel(rand.range(0.1,0.5)).gain(0.125),
+//   note("{fs2 ~ ~ d2 ~!4 a2 ~ ~ d3 ~ ~ [~ a2] ~ fs2 ~ ~ d2 ~!4 a2 ~!3}%4")
+//   .sound("hbass:1"),
+//   note("{~!4 ~ e3 [~ d4] [cs4 a3] ~!4 ~ [a3 cs4] [e3 ~] [a3 gs3]}%4")
+//     .color("[#d62828]")
+//     .sound("hkeys:3")
+//   .delay("0.33:0.25:0.2")
+//   .gain(0.5),
+//   s("{k ~ rim ~, ~ ~ hh}%<4 8 16 8>")
+//   .rarely(chunk(4, fast(2)))
+//   .jux(rev)
+//   .off(.25, mul(speed(.8)))
+//   .superimpose(
+//     x=>x.vowel("<a <e i>>/4").room(2).slow(2).late(.25)
+//   )
+//   .lastOf(8, mul(speed(-2))).gain(0.5)
+// )
+// )
   
-arrange(
-  [8, preintro],
-  [7, intro],
-  [1, shift], 
-  [7, pattern2],
-  [1, shift], 
-  [8, drop]
-)
-  .theme('tokyoNight')
-  .punchcard()
+// arrange(
+//   [8, preintro],
+//   [7, intro],
+//   [1, shift], 
+//   [7, pattern2],
+//   [1, shift], 
+//   [8, drop]
+// )
+//   .theme('tokyoNight')
+//   .punchcard()
 
 
 
