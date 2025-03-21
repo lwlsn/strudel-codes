@@ -35,7 +35,7 @@ a large number of rhythms with a couple of numbers.
 
 */ 
 
-// Play with Euclidean Rhythms
+// Playing with euclidean rhythms
 // sound("cp").euclidRot(3,8,2)
 
 
@@ -70,6 +70,10 @@ E(5,16) = [x . . x . . x . . x . . x . . . .] is the Bossa-Nova rhythm necklace 
 other starting places as well, as for example [x . . x . . x . . x . . . x . .] [3].
 E(7,8) = [x . x x x x x x] is a typical rhythm played on the Bendir (frame drum), and used in the accompaniment of songs of the Tuareg people of Libya [30].
 
+
+
+Check out the paper here: 
+https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 */
 
 
@@ -77,7 +81,7 @@ E(7,8) = [x . x x x x x x] is a typical rhythm played on the Bendir (frame drum)
 2.3 Visualising Patterns 
 */ 
 
-// Using Punchcard 
+// // Using Punchcard 
 // stack(
 //   sound("bd:1 sd ~ cp").color("[#5BC0EB #FDE74C #9BC53D ]"), 
 //   sound("bd:4(3,8) AlesisSR16_sd*4").color("[#C3423F #7E2E84]")
@@ -85,12 +89,20 @@ E(7,8) = [x . x x x x x x] is a typical rhythm played on the Bendir (frame drum)
 // .punchcard()
 
 
-//Using Spiral
+// // Using Spiral
 // stack(
 //   sound("bd:1 sd ~ cp").color("[#5BC0EB #FDE74C ~ #9BC53D ]"), 
 // )
 // ._spiral()
 
+
+// // Using Scope
+//note("c a f e").sound("sawtooth")._scope()
+// Using pitchweel
+// n("0 .. 12").scale("C:chromatic")
+// .s("sawtooth")
+// .lpf(500)
+// ._pitchwheel()
 
 /* 2.4 Loading your own samples? 
 
@@ -102,20 +114,20 @@ E(7,8) = [x . x x x x x x] is a typical rhythm played on the Bendir (frame drum)
 
 */
 
-// // How do i load it into strudel? 
-// samples({
-//   k:  ['snd/k/DNC_Kick.wav' ], 
-//   hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
-//              'snd/hjdsynth/bell-anomal.wav', 'snd/hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
-//   gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
-//        'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
-//        'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
-//   csubs: ['snd/csubs/sub_with_kick_12_C.wav'],
-//   hack: ['snd/hackspace/opening-bar.wav'],
-//   hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
-//   hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
-//   hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
-// }, 'github:lwlsn/digital-selves-samples/main/');
+// How do i load it into strudel? 
+samples({
+  k:  ['snd/k/DNC_Kick.wav' ], 
+  hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
+             'snd/hjdsynth/bell-anomal.wav', 'snd/hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
+  gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
+       'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
+       'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
+  csubs: ['snd/csubs/sub_with_kick_12_C.wav'],
+  hack: ['snd/hackspace/opening-bar.wav'],
+  hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
+  hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
+  hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
+}, 'github:lwlsn/digital-selves-samples/main/');
 
 // // Using randomness to select different samples:
 
@@ -126,12 +138,31 @@ E(7,8) = [x . x x x x x x] is a typical rhythm played on the Bendir (frame drum)
 
 // 2.5 (Disrupting) Repetition
 
+// note("c3 eb3 g3 as3")
+//   .sound("hjdsynth").every(4, fast(2))
+// .punchcard()
 
-// 2.6 Playing with symmetry
+
+// 2.6 Playing with symmetry and randomness
+
+// note("c3 eb3 g3 as3")
+//   .sound("hjdsynth")
+//   .every(4, fast(2))
+// .often(rev)
+// .punchcard()
+
 
 // 2.8 Interference Patterns
+// "c3 eb3 g3 as3"
+//   .off(1/8, x=>x.add(7))
+//   .off(1/16, x=>x.add(12))
+//   .note()
+//   .sound("hjdsynth")
+//   .slow(2)
+//   .every(4, fast(2))
+// .rarely(rev)
+// .punchcard()
 
-
-// 2.9 - Have a go at building your own compositions! 
+// 2.9 - Have a go at building your own compositions below.. ! 
 
 
