@@ -1,12 +1,13 @@
 /* Workshop Exercise 2 - Starting Your Own Algorithmic Pattern Compositions! 
- Now you've taken a look at the fundamentals in Strudel, we can .. 
+ Now you've taken a look at the fundamentals in Strudel, we can learn some more advanced 
+ approaches to algorithmic pattern. 
  */
 
 /*2.1 Run multiple patterns together in the same window: 
 */
-// p1: sound("bd ~ sd*2 hh")
-// p2: sound("insect wind jazz metal")
+//p1: sound("bd ~ sd*2 hh") 
 
+//p2: sound("insect wind jazz metal")
 
 // stack(
 //   sound("bd ~ sd*2 hh"),
@@ -36,7 +37,7 @@ a large number of rhythms with a couple of numbers.
 */ 
 
 // Playing with euclidean rhythms
-// sound("cp").euclidRot(3,8,2)
+// sound("cp").euclid(3,8).spiral()
 
 
 /*
@@ -81,9 +82,9 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 2.3 Visualising Patterns 
 */ 
 
-// // Using Punchcard 
+// Using Punchcard 
 // stack(
-//   sound("bd:1 sd ~ cp").color("[#5BC0EB #FDE74C #9BC53D ]"), 
+//   sound("bd:1 sd ~ cp").color("[#5BC0EB #FDE74C ~ #9BC53D ]"),
 //   sound("bd:4(3,8) AlesisSR16_sd*4").color("[#C3423F #7E2E84]")
 // )
 // .punchcard()
@@ -97,8 +98,9 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 
 
 // // Using Scope
-//note("c a f e").sound("sawtooth")._scope()
-// Using pitchweel
+// note("c a f e").sound("sawtooth")._scope() .
+
+// //Using pitchweel
 // n("0 .. 12").scale("C:chromatic")
 // .s("sawtooth")
 // .lpf(500)
@@ -106,28 +108,28 @@ https://archive.bridgesmathart.org/2005/bridges2005-47.pdf
 
 /* 2.4 Loading your own samples? 
 
-// How do i download it? 
+Github Repo for you to work with
+>> https://github.com/lwlsn/digital-selves-samples/tree/main
 
-// https://github.com/lwlsn/digital-selves-samples/tree/main
-
-// https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
+How do i download it? 
+https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 
 */
 
 // How do i load it into strudel? 
-samples({
-  k:  ['snd/k/DNC_Kick.wav' ], 
-  hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
-             'snd/hjdsynth/bell-anomal.wav', 'snd/hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
-  gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
-       'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
-       'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
-  csubs: ['snd/csubs/sub_with_kick_12_C.wav'],
-  hack: ['snd/hackspace/opening-bar.wav'],
-  hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
-  hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
-  hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
-}, 'github:lwlsn/digital-selves-samples/main/');
+// samples({
+//   k:  ['snd/k/DNC_Kick.wav' ], 
+//   hjdsynth: ['snd/hjdsynth/bass-armor.wav', 'snd/hjdsynth/bass-elder.wav', 'snd/hjdsynth/bass-juan.wav',
+//              'snd/hjdsynth/bell-anomal.wav', 'snd/hjdsynth/bell-castan.wav', 'snd/hjdsynth/bell-dingo.wav'],
+//   gel: ['snd/gel/glass_gel_1.wav', 'snd/gel/glass_gel_2.wav', 'snd/gel/glass_gel_3.wav',
+//        'snd/gel/glass_gel_4.wav', 'snd/gel/glass_gel_5.wav', 'snd/gel/glass_gel_6.wav',
+//        'snd/gel/glass_gel_7.wav', 'snd/gel/glass_gel_8.wav', 'snd/gel/glass_gel_9.wav'],
+//   csubs: ['snd/csubs/sub_with_kick_12_C.wav'],
+//   hack: ['snd/hackspace/opening-bar.wav'],
+//   hbass: ['snd/hbass/001.wav','snd/hbass/002.wav'], 
+//   hkeys: ['snd/hkeys/001.wav', 'snd/hkeys/002.wav', 'snd/hkeys/003.wav', 'snd/hkeys/004.wav'], 
+//   hbreaks: ['snd/hbreaks/BUMBA.WAV', 'snd/hbreaks/breakcore-ish-drumloop-i-think.wav']
+// }, 'github:lwlsn/digital-selves-samples/main/');
 
 // // Using randomness to select different samples:
 
@@ -148,7 +150,7 @@ samples({
 // note("c3 eb3 g3 as3")
 //   .sound("hjdsynth")
 //   .every(4, fast(2))
-// .often(rev)
+// .every(6,rev)
 // .punchcard()
 
 
@@ -157,12 +159,11 @@ samples({
 //   .off(1/8, x=>x.add(7))
 //   .off(1/16, x=>x.add(12))
 //   .note()
-//   .sound("hjdsynth")
+//   .sound("hjdsynth:0")
 //   .slow(2)
 //   .every(4, fast(2))
 // .rarely(rev)
 // .punchcard()
 
 // 2.9 - Have a go at building your own compositions below.. ! 
-
 
