@@ -1,7 +1,7 @@
-// CCI LIVE CODING WORKSHOP
+// . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁. CCI LIVE CODING WORKSHOP . ݁₊ ⊹ . ݁ ⟡ ݁ . ⊹ ₊ ݁.
 
 
-/* How to make a track?  */
+/* ⋆⭒˚.⋆ P1 - How to make a track? ⋆⭒˚.⋆ */
 
 /* 1. Run multiple patterns together in the same window:  */
 
@@ -70,7 +70,18 @@ samples({
 }, 'github:lwlsn/digital-selves-samples/main/');
 
 
-/* 4. (Disrupting) Repetition */
+
+/* 4. Using sliders */
+
+
+// $: note("c3 eb3 g3 as3")
+//   .sound("hjdsynth:3")
+//   .lpf(slider(1814.6, 200, 2000))
+// ._punchcard()
+
+
+
+/* 5. (Disrupting) Repetition */
 
 // $: note("c3 eb3 g3 as3")
 //   .sound("hjdsynth:3")
@@ -78,7 +89,7 @@ samples({
 // ._punchcard()
 
 
-/* 5. Playing with symmetry and randomness */
+/* 6. Playing with symmetry and randomness */
 
 // $: note("c3 eb3 g3 as3")
 //   .sound("hjdsynth:3")
@@ -87,15 +98,15 @@ samples({
 // ._punchcard()
 
 
-/* 6. Interference Patterns */
+/* 7. Interference Patterns */
 
 
-$: "c2 eb2 g2 as2"
-  .off(1/8, x=> x.add(7))
-  .off(1/16, x=> x.add(12)).slow(2)
-    .every(4, fast(2))
-.rarely(rev)
-  .note().sound("hjdsynth:3")._punchcard()
+// $: "c2 eb2 g2 as2"
+//   .off(1/8, x=> x.add(7))
+//   .off(1/16, x=> x.add(12)).slow(2)
+//     .every(4, fast(2))
+// .rarely(rev)
+//   .note().sound("hjdsynth:3")._punchcard()
 
 // $: "c2 eb2 g2 as2"
 //   .off(1/8, x=>x.add(7))
@@ -108,13 +119,56 @@ $: "c2 eb2 g2 as2"
 // ._punchcard()
 
 
+/* ⋆⭒˚.⋆ P2 - How to add visuals? ⋆⭒˚.⋆  */
+
+/* 8. Add Visuals to Your Code :)) */ 
+
+
+await initHydra()
+
+
+/* 8.1 - Using functions */
+
+// osc(20, 0.1, 1.2)
+//   .kaleid()
+//   .rotate(0, 0.2)
+//   .repeat(3,3)
+//   .out()
 
 
 
+/* 8.2 - Using initCam */
+
+// s0.initCam()
+
+// src(s0)
+//   .out()
 
 
 
+/* 8.3 - Blending and Feedback 
+// Blending Feeds 
+//s0.initCam()
 
+//src(s0).out(o1)
+
+// src(s0).modulate(o0).out(o2)
+
+
+// Feedback on itself.. 
+// src(o2).blend(o0, 0.02).out(o0) 
+
+// render(o0)
+
+
+
+/* 8.4 - Using initScreen */
+//s0.initScreen()
+
+// src(s0)
+//   .scrollX([0.1, -0.2])
+//   .modulate(o0)
+//   .out(o0)
 
 
 
