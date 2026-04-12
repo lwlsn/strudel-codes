@@ -1,5 +1,5 @@
 // ╔══════════════════════════════════════════════════════╗
-// ║  CONCRETE POETRY PREAMBLE — strudel.cc REPL             ║
+// ║  CONCRETE POETRY PREAMBLE — strudel.cc REPL          ║
 // ╚══════════════════════════════════════════════════════╝
 const WORDS = {
   bd:  'body',
@@ -13,7 +13,13 @@ const WORDS = {
 };
 
 // Get FONT From Google 
-
+await fetch('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap')
+  .then(r => r.text())
+  .then(css => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+  });
 
 let flashes = [];
 const ctx = getDrawContext();
@@ -33,7 +39,7 @@ function paintLoop() {
     const drift = (1 - t) * f.baseSz * 1.5;
     ctx.save();
     ctx.globalAlpha = a;
-    ctx.font = Math.round(f.baseSz) + 'px monospace';
+    ctx.font = Math.round(f.baseSz) + 'px "UnifrakturMaguntia"';
     ctx.fillStyle = f.col;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
