@@ -1,13 +1,15 @@
+
+
 // ╔══════════════════════════════════════════════════════╗
 // ║  CONCRETE POETRY PREAMBLE — strudel.cc REPL          ║
 // ╚══════════════════════════════════════════════════════╝
 const WORDS = {
   bd:  'body',
-  sd:  'falls',
-  hh:  'into',
+  snares:  'falls',
+  hhs:  'into',
   cp:  'silence',
   rim: 'again',
-  oh:  'breath',
+  perc:  'breath',
   lt:  'threshold',
   mt:  'membrane',
 };
@@ -57,9 +59,9 @@ function paintLoop() {
 paintLoop();
 
 const COLS = {
-  bd:  '#88ffcc', sd:  '#ffaa55',
-  hh:  '#aaddff', cp:  '#ff88cc',
-  rim: '#ccff88', oh:  '#ffdd88',
+  bd:  '#C3423F', snares:  '#ffaa55',
+  hhs:  '#D7C0D0', cp:  '#ff88cc',
+  rim: '#ccff88', perc:  '#ffdd88',
   lt:  '#bb88ff', mt:  '#88ffee',
 };
 
@@ -79,48 +81,49 @@ function spawnWord(snd, vel) {
 }
 
 
-
-
-
-
-
 // ╔══════════════════════════════════════════════════════╗
 // ║  CONCRETE POETRY SCORE — strudel.cc REPL             ║
 // ╚══════════════════════════════════════════════════════╝
 
 // ── PATTERNING ────────────────────────────────────────
 
-let pat1 = "bd bd bd*2 bd ~ ~ bd ~"
-let pat2 = "hh*8?"
-let pat3 = "~ ~ sd ~ ~ ~ sd ~"
+let pat1 = "{ks:3 ks:4 ks:2*2 ks:3 ~ ~ bd:2 ~ bd:2 ~ bd:3 [~ bd:4] ~ ~ bd:2 bd:2*2}%8"
+let pat2 = "hhs:4*8?"
+let pat3 = "~ ~ snares ~ ~ ~ snares ~"
 let pat4 = "~ cp ~ ~ ~ cp ~ ~"
 let pat5 = "~ ~ ~ rim ~ ~ ~ rim:2"
+let pat6 = "computer-perc*8"
 
 
-$: stack(
+$_: stack(
   sound(pat1),
   sound(pat1).onTrigger((hap) => spawnWord('bd',  hap.value.gain ?? 1),   true))
+.rarely(fast(2))
 
 $: stack(
   sound(pat2),
-  sound(pat2).onTrigger((hap) => spawnWord('hh',  hap.value.gain ?? 0.5), true)
+  sound(pat2).onTrigger((hap) => spawnWord('hhs',  hap.value.gain ?? 0.8), true)
   )
 
 $: stack(
-  sound(pat3),
-  sound(pat3).onTrigger((hap) => spawnWord('sd',  hap.value.gain ?? 0.8), true)
+  sound(pat3).n(irand(8)),
+  sound(pat3).onTrigger((hap) => spawnWord('snares',  hap.value.gain ?? 0.5), true)
   )
 
-$: stack(
+$_: stack(
   sound(pat4),
    sound(pat4).onTrigger((hap) => spawnWord('cp',  hap.value.gain ?? 0.9), true)
 )
 
-$: stack(
+$_: stack(
   sound(pat5),
   sound(pat5).onTrigger((hap) => spawnWord('rim', hap.value.gain ?? 0.7), true)
 )
 
+$: stack(
+  sound(pat6).n(irand(16)), 
+  sound(pat6).onTrigger((hap) => spawnWord('perc', hap.value.gain ?? 0.7), true)
+)  
 
 
 
